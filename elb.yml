@@ -1,0 +1,27 @@
+Parameters:
+  DefaultRedirect:
+    Type: String
+    Description: The host for the redirect.
+
+Resources:
+  ElbHttpListener:
+    Properties:
+      DefaultActions:
+        Fn::Replace:
+          - Type: redirect
+            RedirectConfig:
+              Host:
+                Fn::Sub: ${DefaultRedirect}
+              Protocol: HTTP
+              StatusCode: HTTP_301
+
+  ElbHttpsListener:
+    Properties:
+      DefaultActions:
+        Fn::Replace:
+          - Type: redirect
+            RedirectConfig:
+              Host:
+                Fn::Sub: ${DefaultRedirect}
+              Protocol: HTTPS
+              StatusCode: HTTP_301
